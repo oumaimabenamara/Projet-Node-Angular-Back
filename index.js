@@ -7,9 +7,9 @@ dotenv.config();
 const passport = require('./passport/passport');
 const port = 3000;
 const app = express();
-app.unsubscribe(cors());
+app.use(cors());
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //import connection to database
@@ -30,5 +30,5 @@ app.use('', companyAPI);
 
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-  });
+  console.log(`Example app listening at http://localhost:${port}`);
+});
