@@ -28,14 +28,5 @@ router.delete('/tags/:id', passport.authenticate('bearer', { session: false }), 
     res.json({ message: 'Tag deleted successfully.' });
 });
 
-router.put('/tags/affectTutorials/:idTag/:idTuto', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const updatedTag = await Tag.findByIdAndUpdate(req.params.idTag, { $push: { tutorials: req.params.idTuto } }, { new: true });
-    res.json({ message: 'Tutorial affected successfully.' });
-});
-
-router.put('/tags/desaffectTutorials/:idTag/:idTuto', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const updatedTag = await Tag.findByIdAndUpdate(req.params.idTag, { $pull: { tutorials: req.params.idTuto } }, { new: true });
-    res.json({ message: 'Tutorial desaffected successfully.' });
-});
 
 module.exports = router;
