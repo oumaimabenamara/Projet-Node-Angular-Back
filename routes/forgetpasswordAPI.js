@@ -7,7 +7,7 @@ const passport = require('passport');
 
 router.get('/forget-password/:email', passport.authenticate('bearer', { session: false }), async (req, res) => {
     const foundCompany = await Company.findOne({ email: req.params.email });
-    res.json(foundCompany);
+    res.json(foundCompany.id);
 });
 
 
