@@ -18,12 +18,20 @@ const connect = require('./database/connect');
 //import routing
 const registerAPI = require('./routes/registerAPI');
 const loginAPI = require('./routes/loginAPI');
+const logoutAPI = require('./routes/logoutAPI');
+// const forgetpasswordAPI = require('./routes/forgetpasswordAPI');
+// const resetpasswordApi = require('./routes/resetpasswordApi');
+const eventAPI = require('./routes/eventAPI');
 const companyAPI = require('./routes/companyAPI');
 const tagApi = require('./routes/tagApi');
 
 //use routing
 app.use('', registerAPI);
 app.use('', loginAPI);
+app.use('', logoutAPI);
+// app.use('', forgetpasswordAPI);
+// app.use('', resetpasswordApi);
+app.use('', eventAPI);
 app.use('', companyAPI);
 app.use('', tagApi);
 
