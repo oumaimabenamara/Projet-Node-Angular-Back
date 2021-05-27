@@ -5,8 +5,8 @@ const passport = require('passport');
 
 
 
-router.put('/reset-password/:id', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const updatedCompany = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true });
+router.post('/reset-password', passport.authenticate('bearer', { session: false }), async (req, res) => {
+    const updatedCompany = await Company.findByIdAndUpdate(req.params.body.id, req.body, { new: true });
     res.json(updatedCompany);
 });
 

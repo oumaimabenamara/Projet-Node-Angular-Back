@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Company = require("../models/companySchema");
+const Token = require("../models/resetTokenSchema");
 const path = require("path");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
+const randomString = require("randomstring");
 const ejs = require("ejs");
 
 router.get("/forget-password/:email", async (req, res) => {
@@ -12,23 +14,24 @@ router.get("/forget-password/:email", async (req, res) => {
         res.status(400).json({ message: "Account not found" });
     } else {
         // try 1 (reset token + create link to send)
-        /* let token = await Token.findOne({ userId: user._id });
-             if (token) {
-                 await token.deleteOne()
-             };
-             let resetToken = crypto.randomBytes(32).toString("hex");
-     
-             const hash = await bcrypt.hash(resetToken, Number(bcryptSalt));
-     
-             await new Token({
-                 userId: user._id,
-                 token: hash,
-                 createdAt: Date.now(),
-             }).save();
-     
-             const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
-             sendEmail(user.email, "Password Reset Request", { name: user.name, link: link, }, "./template/requestResetPassword.handlebars");
-             return link;*/
+        let token = await Token.findOne({ companyId: foundCompany._id });
+        if (token) {
+            await token.deleteOne()
+        };
+
+        const hash = randomString.generate({
+            length: 12,
+            charset: 'alphabetic'
+        });
+
+        const createdToken = await new Token({
+            companyId: foundCompany._id,
+            token: hash,
+            createdAt: Date.now(),
+        }).save();
+
+
+
 
         // send mail
         let transporter = nodemailer.createTransport({
@@ -46,7 +49,7 @@ router.get("/forget-password/:email", async (req, res) => {
         const resetPwdTemplate = fs.readFileSync(resetPwdTemplatePath, {
             encoding: "utf-8",
         });
-        const link = process.env.DASHBOARDURL
+        const link = `${process.env.DASHBOARDURL}${createdToken.token}`
         const render = ejs.render(resetPwdTemplate, { name: foundCompany.companyName, link: link });
         console.log(render);
 
