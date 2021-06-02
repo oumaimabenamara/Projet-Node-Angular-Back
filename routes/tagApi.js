@@ -4,28 +4,58 @@ const Tag = require('../models/tagSchema');
 const passport = require('passport');
 
 router.get('/tags', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const Tags = await Tag.find()//.populate('tutorials');
-    res.json(Tags);
+    try{
+        const Tags = await Tag.find()//.populate('tutorials');
+        res.json(Tags);
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 router.get('/tags/:id', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const foundTag = await Tag.findById(req.params.id);
-    res.json(foundTag);
+    try{
+        const foundTag = await Tag.findById(req.params.id);
+        res.json(foundTag);
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 router.post('/tags', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const createdTag = await Tag.create(req.body);
-    res.json(createdTag);
+    try{
+        const createdTag = await Tag.create(req.body);
+        res.json(createdTag);
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 router.put('/tags/:id', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const updatedTag = await Tag.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updatedTag);
+    try{
+        const updatedTag = await Tag.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedTag);
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 router.delete('/tags/:id', passport.authenticate('bearer', { session: false }), async (req, res) => {
-    const deletedTag = await Tag.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Tag deleted successfully.' });
+    try{
+        const deletedTag = await Tag.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Tag deleted successfully.' });
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 

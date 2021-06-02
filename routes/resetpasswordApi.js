@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/reset-password', async (req, res) => {
-    console.log(req.body);
+    try{
+            // console.log(req.body);
     const tokenFound = await Token.findOne({token: req.body.token});
     if (tokenFound == null)
     {
@@ -30,6 +31,11 @@ router.post('/reset-password', async (req, res) => {
         await tokenFound.delete();
         // return response
         res.json({message: 'updatedCompany'});
+    }
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
     }
 });
 
