@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <mate charest="utf-8" />
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <h1>Virtual Ticket</h1>
+    <p> <%= firstName %> <%= lastName %> <%= reservationDate %></p>
+   <!-- <img src= "<%= `./qrcodes/${qrCodePath}.png` %>"> -->
+   <img src= "<%= `${qrCodePath}` %>">
+
+   <!-- <% if(typeof data == 'object' && data.results.length > 0){ %>
+    <img src=<%= "https://image.tmdb.org/t/p/w200/${data.results[0].poster_path}" %>/>
+<%}%> -->
+    <!-- add pdf -->
+
+  </body>
+</html>
