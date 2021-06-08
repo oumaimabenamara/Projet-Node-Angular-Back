@@ -3,8 +3,14 @@ const router = express.Router();
 
 
 router.get('/logout', (req, res)=>{
-    req.logout();
-    res.json({message: 'logged out successfully'});
+    try{
+        req.logout();
+        res.json({message: 'logged out successfully'});
+    }
+    catch(error)
+    {
+        res.status(500).json({message:'internal server error'})
+    }
 });
 
 
