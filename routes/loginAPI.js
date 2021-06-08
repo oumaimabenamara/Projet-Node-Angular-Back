@@ -19,6 +19,7 @@ router.post('/login', async (req, res) => {
             if (passwordEqual == true) {
                 // create a token
                 const tokenData = {
+                    role: companyFound.role,
                     email: companyFound.email,
                     companyId: companyFound._id,
                     companyName: companyFound.companyName
