@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const passport = require('passport');
 const path = require("path");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
@@ -12,7 +11,7 @@ const bodyParser = require('body-parser');
 
 const UserInfo = require("../models/reservationSchema");
 
-router.post('/reservation/:email', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.post('/reservation/:email', async (req, res) => {
     try {
         const userReservationInfo = await UserInfo.create(req.body);
         // console.log(userReservationInfo);
