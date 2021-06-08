@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
 const passport = require('./passport/passport');
@@ -11,7 +12,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use('/qrcodes', express.static(path.join(__dirname, 'qrcodes')))
 //import connection to database
 const connect = require('./database/connect');
 
@@ -24,6 +25,8 @@ const resetpasswordApi = require('./routes/resetpasswordApi');
 const eventAPI = require('./routes/eventAPI');
 const companyAPI = require('./routes/companyAPI');
 const tagApi = require('./routes/tagApi');
+const dashboardApi = require('./routes/dashboardApi');
+const reservationApi = require('./routes/reservationApi');
 
 //use routing
 app.use('', registerAPI);
@@ -34,6 +37,8 @@ app.use('', resetpasswordApi);
 app.use('', eventAPI);
 app.use('', companyAPI);
 app.use('', tagApi);
+app.use('', dashboardApi);
+app.use('', reservationApi);
 
 
 
