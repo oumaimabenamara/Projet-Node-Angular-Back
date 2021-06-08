@@ -31,6 +31,7 @@ router.get("/forget-password/:email", async (req, res) => {
                 createdAt: Date.now(),
             }).save();
     
+            
             // send mail
             let transporter = nodemailer.createTransport({
                 service: "gmail",

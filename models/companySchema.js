@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const companySchema = mongoose.Schema({
     companyName: String,
     companyDescription: String,
-    photo: String,
+    companyPhoto: String,
     email: String,
     password: String,
     role: {type: String, default: 'admin', required: false},
