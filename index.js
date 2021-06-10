@@ -27,6 +27,7 @@ const companyAPI = require('./routes/companyAPI');
 const tagApi = require('./routes/tagApi');
 const dashboardApi = require('./routes/dashboardApi');
 const reservationApi = require('./routes/reservationApi');
+const homeNoLoginApi = require('./routes/homeNoLoginApi');
 
 //use routing
 app.use('', registerAPI);
@@ -39,6 +40,7 @@ app.use('', companyAPI);
 app.use('', tagApi);
 app.use('', dashboardApi);
 app.use('', reservationApi);
+app.use('', homeNoLoginApi);
 
 
 

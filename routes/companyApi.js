@@ -36,7 +36,7 @@ const upload = multer({ storage: myStorage, fileFilter: myFileFilter });
 // 1. get all companies
 router.get('/companies', passport.authenticate('bearer', { session: false }), async (req, res) => {
   try {
-    console.log(req.user);
+    // console.log(req.user);
     if (req.user.role == 'admin') {
       res.json([req.user]);
     }
@@ -67,7 +67,7 @@ router.post('/companies', [passport.authenticate('bearer', { session: false }), 
   try {
     if (req.file !== undefined) {
       //ADD COMPANY PHOTO
-      console.log(req.file);
+      // console.log(req.file);
       req.body.companyPhoto = req.file.filename;
     }
 
@@ -94,7 +94,7 @@ router.put('/companies/:id', [passport.authenticate('bearer', { session: false }
   try {
     if (req.file !== undefined) {
       //EDIT COMPANY PHOTO
-      console.log(req.file);
+      // console.log(req.file);
       req.body.companyPhoto = req.file.filename;
     }
 
