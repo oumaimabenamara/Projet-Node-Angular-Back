@@ -12,7 +12,9 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/qrcodes', express.static(path.join(__dirname, 'qrcodes')))
+app.use('/event-uploads', express.static(path.join(__dirname, '/event-uploads')));
 //import connection to database
 const connect = require('./database/connect');
 
