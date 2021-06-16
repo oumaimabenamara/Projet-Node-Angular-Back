@@ -11,7 +11,7 @@ const Company = require('../models/companySchema')
 // Storage
 const myStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const folder = path.resolve('./uploads');
+        const folder = path.resolve('./event-uploads');
         // console.log(folder);
         cb(null, folder)
     },
@@ -39,12 +39,13 @@ router.get('/events', passport.authenticate('bearer', { session: false }), async
             res.json(events);
         }
         else {
-            const eventOfConnected = await (await Company.findById(req.user._id)).populated('events');
+            const eventOfConnected = await Company.findById(req.user._id).populate('events');
             res.json(eventOfConnected.events);
         }
 
     }
     catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'internal server error' })
     }
 });
@@ -63,9 +64,10 @@ router.post('/events', [passport.authenticate('bearer', { session: false }), upl
     try {
         if (req.file !== undefined) {
             //ADD EVENT PHOTO
-            //   console.log(req.file);
-            req.body.companyPhoto = req.file.filename;
+            req.body.eventPhoto = req.file.filename;
         }
+        console.log(req.file);
+
         const createdEvent = await Event.create(req.body);
         await Company.findByIdAndUpdate(req.user._id, { $push: { events: createdEvent._id } }, { new: true });
         res.json(createdEvent);
@@ -80,7 +82,7 @@ router.put('/events/:id', [passport.authenticate('bearer', { session: false }), 
         if (req.file !== undefined) {
             //EDIT EVENT PHOTO
             //   console.log(req.file);
-            req.body.companyPhoto = req.file.filename;
+            req.body.eventPhoto = req.file.filename;
         }
 
         const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
