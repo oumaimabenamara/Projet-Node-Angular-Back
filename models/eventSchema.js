@@ -11,6 +11,7 @@ const eventSchema = mongoose.Schema({
     numberOfTickets: Number,
     eventType: String,
     price: String,
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'company' },
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tags' }]
 },
     {

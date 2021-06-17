@@ -49,7 +49,7 @@ router.get("/forget-password/:email", async (req, res) => {
             });
             const link = `${process.env.DASHBOARDURL}${createdToken.token}`
             const render = ejs.render(resetPwdTemplate, { name: foundCompany.companyName, link: link });
-            console.log(render);
+            // console.log(render);
     
             let info = await transporter.sendMail({
                 from: process.env.EMAIL,

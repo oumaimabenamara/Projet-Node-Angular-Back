@@ -66,8 +66,7 @@ router.post('/events', [passport.authenticate('bearer', { session: false }), upl
             //ADD EVENT PHOTO
             req.body.eventPhoto = req.file.filename;
         }
-        console.log(req.file);
-
+        req.body.company = req.user._id;
         const createdEvent = await Event.create(req.body);
         await Company.findByIdAndUpdate(req.user._id, { $push: { events: createdEvent._id } }, { new: true });
         res.json(createdEvent);
