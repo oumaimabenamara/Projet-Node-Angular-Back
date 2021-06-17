@@ -14,8 +14,10 @@ router.get('/events-nologin', async (req, res) => {
 
 router.get('/events-nologin/:id', async (req, res) => {
     try {
-        const foundEvent = await Event.findById(req.params.id).populate('company');
-        console.log(foundEvent);
+        const foundEvent = await Event.findById(req.params.id)
+        .populate('company')
+        .populate('tags');
+        // console.log(foundEvent);
         res.json(foundEvent);
     }
     catch (error) {
