@@ -30,6 +30,7 @@ router.get("/forget-password/:email", async (req, res) => {
                 token: hash,
                 createdAt: Date.now(),
             }).save();
+            console.log(createdToken);
 
 
             // send mail
@@ -47,7 +48,8 @@ router.get("/forget-password/:email", async (req, res) => {
             const resetPwdTemplate = fs.readFileSync(resetPwdTemplatePath, {
                 encoding: "utf-8",
             });
-            const link = `${process.env.DASHBOARDURL}${createdToken.token}`
+            const link = `${process.env.DASHBOARDURL}${createdToken.token}`;
+            console.log(link);
             const render = ejs.render(resetPwdTemplate, { name: foundCompany.companyName, link: link });
             // console.log(render);
 
