@@ -54,7 +54,7 @@ router.post('/reservation/:eventID', async (req, res) => {
 
             // const renderPDF = ejs.render(pdfTemplate, { firstName: userReservationInfo.firstName, lastName: userReservationInfo.lastName, reservationDate: userReservationInfo.createdAt, qrCodePath: userReservationInfo._id });
             const ticketDate = `${userReservationInfo.createdAt.getDate()} / ${userReservationInfo.createdAt.getMonth()} / ${userReservationInfo.createdAt.getFullYear()}`;
-            const renderPDF = ejs.render(pdfTemplate, { firstName: userReservationInfo.firstName, lastName: userReservationInfo.lastName, reservationDate: ticketDate, qrCodePath: qrCodePath });
+            const renderPDF = ejs.render(pdfTemplate, { firstName: userReservationInfo.firstName, lastName: userReservationInfo.lastName, reservationDate: ticketDate, qrCodePath: qrCodePath, eventName: eventDetails.eventName, eventPrice: eventDetails.price, startDate: eventDetails.startDate, endDate: eventDetails.endDate, eventPlace: eventDetails.location });
             const document = {
                 html: renderPDF,
                 data: userReservationInfo,
@@ -86,7 +86,7 @@ router.post('/reservation/:eventID', async (req, res) => {
                         encoding: "utf-8",
                     });
 
-                    const render = ejs.render(reservationTicketTemplate, { firstName: req.body.firstName, lastName: req.body.lastName });
+                    const render = ejs.render(reservationTicketTemplate, { firstName: req.body.firstName, lastName: req.body.lastName, eventName: eventDetails.eventName });
                     // console.log(render);
 
                     // SEND EMAIL
@@ -115,7 +115,7 @@ router.post('/reservation/:eventID', async (req, res) => {
         }
     }
     catch (error) {
-        
+        console.log(error);
         res.status(500).json({ message: 'internal server error' })
     }
 });
