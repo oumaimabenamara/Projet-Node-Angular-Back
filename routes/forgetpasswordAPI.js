@@ -9,7 +9,7 @@ const randomString = require("randomstring");
 const ejs = require("ejs");
 
 router.get("/forget-password/:email", async (req, res) => {
-    try{
+    try {
         const foundCompany = await Company.findOne({ email: req.params.email });
         if (foundCompany == null) {
             res.status(400).json({ message: "Account not found" });
@@ -19,19 +19,19 @@ router.get("/forget-password/:email", async (req, res) => {
             if (token) {
                 await token.deleteOne()
             };
-    
+
             const hash = randomString.generate({
                 length: 12,
                 charset: 'alphabetic'
             });
-    
+
             const createdToken = await new Token({
                 companyId: foundCompany._id,
                 token: hash,
                 createdAt: Date.now(),
             }).save();
-    
-            
+
+
             // send mail
             let transporter = nodemailer.createTransport({
                 service: "gmail",
@@ -50,21 +50,21 @@ router.get("/forget-password/:email", async (req, res) => {
             const link = `${process.env.DASHBOARDURL}${createdToken.token}`
             const render = ejs.render(resetPwdTemplate, { name: foundCompany.companyName, link: link });
             // console.log(render);
-    
+
             let info = await transporter.sendMail({
                 from: process.env.EMAIL,
                 to: foundCompany.email,
                 subject: "Reset password",
                 html: render,
+
             });
-    
+
             // return response
             res.json({ message: "check your mail" });
         }
     }
-    catch(error)
-    {
-        res.status(500).json({message:'internal server error'})
+    catch (error) {
+        res.status(500).json({ message: 'internal server error' })
     }
 });
 

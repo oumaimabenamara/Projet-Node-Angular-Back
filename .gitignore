@@ -1,4 +1,5 @@
 node_modules
 uploads/*
 event-uploads/*
-.pdf
+qrcodes/*
+*.pdf

@@ -15,7 +15,11 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/qrcodes', express.static(path.join(__dirname, 'qrcodes')))
 app.use('/event-uploads', express.static(path.join(__dirname, '/event-uploads')));
-app.use('/public', express.static(path.join(__dirname, 'public')))
+// express.static(root, [options])
+app.use('/public', express.static(path.join(__dirname, '/public')))
+// app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static('public'))
+// app.use(express.static('files'))
 //import connection to database
 const connect = require('./database/connect');
 
